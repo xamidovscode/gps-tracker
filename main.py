@@ -32,12 +32,9 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(db_user)
     return db_user
 
-
 @app.get("/users/", response_model=List[UserOut])
 def create_user(db: Session = Depends(get_db)):
     return db.query(User).filter(User.name == 'string')
-
-
 
 @app.get("/users/{user_id}", response_model=UserOut)
 def create_user(user_id: int, db: Session = Depends(get_db)):
