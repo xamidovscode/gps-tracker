@@ -1,20 +1,13 @@
 from pydantic import BaseModel
-from typing import Optional
+from datetime import datetime
 
-
-class UserCreate(BaseModel):
-    name: str
-
-class UserOut(BaseModel):
+class GpsDataOut(BaseModel):
     id: int
-    name: str
+    imei: str
+    lat: float
+    lon: float
+    created_at: datetime
 
     class Config:
         orm_mode = True
-
-class UserUpdate(BaseModel):
-    name: Optional[str] = None
-
-
-
 

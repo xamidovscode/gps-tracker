@@ -1,9 +1,16 @@
-from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Float, DateTime, func
+from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class User(Base):
-    __tablename__ = "users"
+class GpsData(Base):
+    __tablename__ = "gps_data"
+
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
+    imei = Column(String, nullable=False)
+    lat = Column(Float, nullable=False)
+    lon = Column(Float, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    class Config:
+        orm_mode = True
