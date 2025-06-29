@@ -4,6 +4,8 @@ SQLAlchemy~=2.0.41
 asyncpg
 alembic
 python-dotenv~=1.1.1
-redis>=4.5.0
+redis==6.2.0
 pydantic~=2.11.7
 Booktype~=1.5
+pydantic-settings==2.10.1
+
