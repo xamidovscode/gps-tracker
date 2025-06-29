@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 import asyncio
 import json
@@ -9,8 +9,8 @@ import redis.asyncio as redis
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-from app.models.gps import GpsData
 from app.core.config import settings
+from app.models import GpsData
 
 redis_client = redis.Redis.from_url(settings.REDIS_URL, decode_responses=True)
 DATABASE_URL = settings.DATABASE_URL
