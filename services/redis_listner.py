@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import asyncio
 import json
 import redis.asyncio as redis
@@ -5,13 +9,11 @@ import redis.asyncio as redis
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-from models import Base, GpsData
+from app.models.gps import GpsData
+from app.core.config import settings
 
-REDIS_URL = "redis://localhost:6379/0"
-CHANNEL = "fmb920_data"
-redis_client = redis.Redis.from_url(REDIS_URL, decode_responses=True)
-
-DATABASE_URL = "postgresql+asyncpg://gps:gps@localhost:5432/gps"
+redis_client = redis.Redis.from_url(settings.REDIS_URL, decode_responses=True)
+DATABASE_URL = settings.DATABASE_URL
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
@@ -48,8 +50,8 @@ async def save_to_db(data: dict):
 
 async def listen_to_redis():
     pubsub = redis_client.pubsub()
-    await pubsub.subscribe(CHANNEL)
-    print(f"Listening to Redis channel: {CHANNEL}")
+    await pubsub.subscribe(settings.CHANNEL)
+    print(f"Listening to Redis channel: {settings.CHANNEL}")
 
     async for message in pubsub.listen():
         if message["type"] == "message":

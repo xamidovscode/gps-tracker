@@ -11,6 +11,3 @@ class GpsData(Base):
     lat = Column(Float, nullable=False)
     lon = Column(Float, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-
-    class Config:
-        orm_mode = True
